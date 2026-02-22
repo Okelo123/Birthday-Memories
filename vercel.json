@@ -1,20 +1,4 @@
 {
   "version": 2,
-  "public": true,
-  "buildCommand": "echo 'Static site'",
-  "outputDirectory": ".",
-  "routes": [
-    {
-      "src": "/photos/(.*)",
-      "dest": "/photos/$1"
-    },
-    {
-      "src": "/(.*\\..*)",
-      "dest": "/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ]
+  "public": true
 }
