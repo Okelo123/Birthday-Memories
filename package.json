@@ -1,0 +1,13 @@
+{
+  "name": "birthday-gallery",
+  "version": "1.0.0",
+  "description": "Happy Birthday Brian Juma - 3D Photo Gallery",
+  "private": true,
+  "scripts": {
+    "dev": "npx http-server",
+    "start": "npx http-server"
+  },
+  "keywords": ["birthday", "gallery", "3d"],
+  "author": "",
+  "license": "ISC"
+}
