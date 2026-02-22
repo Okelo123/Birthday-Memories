@@ -735,7 +735,7 @@ brian-394161296" target="_blank" rel="noopener noreferrer" class="social-link" a
       const highlight = config.highlight_color || defaultConfig.highlight_color;
       const bg = config.background_color || defaultConfig.background_color;
       
-      // Update greeting
+      // Update greeting (will be handled by startTimeUpdates interval)
       updateTimeGreeting(name);
       
       // Update message
@@ -787,7 +787,7 @@ brian-394161296" target="_blank" rel="noopener noreferrer" class="social-link" a
     // ===== TIME-BASED GREETING =====
     function getTimeBasedGreeting() {
       const hour = new Date().getHours();
-      if (hour >= 5 && hour < 12) {
+      if (hour >= 0 && hour < 12) {
         return 'Good Morning';
       } else if (hour >= 12 && hour < 17) {
         return 'Good Afternoon';
@@ -796,10 +796,38 @@ brian-394161296" target="_blank" rel="noopener noreferrer" class="social-link" a
       }
     }
     
+    function getTimeBasedSubtitle() {
+      const hour = new Date().getHours();
+      let timeEmojiPhrase;
+      
+      if (hour >= 0 && hour < 12) {
+        timeEmojiPhrase = 'Start your day 🌅';
+      } else if (hour >= 12 && hour < 17) {
+        timeEmojiPhrase = 'Afternoon vibes 🌤️';
+      } else {
+        timeEmojiPhrase = 'Evening celebration 🌙';
+      }
+      
+      return `Software Engineer Extraordinaire 🚀 · ${timeEmojiPhrase}`;
+    }
+    
     function updateTimeGreeting(name) {
       const timeGreeting = getTimeBasedGreeting();
+      const subtitle = getTimeBasedSubtitle();
       document.getElementById('time-greeting').textContent = timeGreeting;
       document.getElementById('main-title').textContent = `Today is ${name}'s Birthday! 🎉`;
+      document.getElementById('subtitle').textContent = subtitle;
+    }
+    
+    // ===== START CONTINUOUS TIME UPDATES =====
+    function startTimeUpdates(name) {
+      // Update immediately
+      updateTimeGreeting(name);
+      
+      // Update every minute
+      setInterval(() => {
+        updateTimeGreeting(name);
+      }, 60000);
     }
     
     // ===== BIRTHDAY QUOTES =====
@@ -958,14 +986,14 @@ brian-394161296" target="_blank" rel="noopener noreferrer" class="social-link" a
     // ===== PHOTO GALLERY URLS =====
     // Add your photos to the 'photos' folder, then update these paths
     const photos = [
-      './photos/Photo1.jpg', // Place your photos in the 'photos' folder
-      './photos/Photo2.jpeg',
-      './photos/Photo3.jpeg',
-      './photos/Photo4.jpg',
-      './photos/Photo5.jpg',
-      './photos/Photo6.jpg',
-      './photos/Photo7.jpg',
-      './photos/Photo8.jpeg'
+      './photos/photo1.jpg', // Place your photos in the 'photos' folder
+      './photos/photo2.jpeg',
+      './photos/photo3.jpeg',
+      './photos/photo4.jpg',
+      './photos/photo5.jpg',
+      './photos/photo6.jpg',
+      './photos/photo7.jpg',
+      './photos/photo8.jpeg'
     ];
     
     // ===== 3D GALLERY =====
@@ -1270,6 +1298,10 @@ brian-394161296" target="_blank" rel="noopener noreferrer" class="social-link" a
       initSoundToggle();
       initVoiceButton();
       startFlowers();
+      
+      // Start time-based greeting updates (every minute)
+      const name = config.celebrant_name || defaultConfig.celebrant_name;
+      startTimeUpdates(name);
       
       // Start countdown
       updateCountdown();
